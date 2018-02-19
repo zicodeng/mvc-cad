@@ -1,6 +1,6 @@
 import { DrawableShape as Shape, Rectangle, Circle, Triangle } from './shapes';
 
-const defaultSize = 60;
+const baseSize = 60;
 
 interface IShapeFactory {
     createRectangle(
@@ -28,13 +28,13 @@ class ShapeFactory implements IShapeFactory {
     createRectangle(
         cx: number,
         cy: number,
-        width: number = defaultSize,
-        height: number = defaultSize
+        width: number = baseSize,
+        height: number = baseSize * 2
     ): Shape {
         return new Rectangle(cx, cy, width, height);
     }
 
-    createCircle(cx: number, cy: number, radius: number = defaultSize): Shape {
+    createCircle(cx: number, cy: number, radius: number = baseSize): Shape {
         return new Circle(cx, cy, radius);
     }
 
