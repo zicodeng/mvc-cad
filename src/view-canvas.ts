@@ -1,16 +1,20 @@
 import { DrawableShape } from './shapes';
 import { Model } from './model';
+import ViewCanvasController, { Action } from './view-canvas-controller';
+import { Observer } from './observer';
 
 /**
  * A class to represent the View. Contains control buttons and an HTML5 canvas.
  */
-export class View {
+export class View implements Observer {
     // Constants for easy access.
     readonly canvas = $('#graphics-view canvas')[0] as HTMLCanvasElement;
     readonly brush = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
     private selected: DrawableShape | null = null; // Selected state is handled by View.
     private action: string; // what action we are doing (handled by View).
+
+    private viewCanvasController = new ViewCanvasController(this.model);
 
     constructor(private model: Model) {
         // Event listeners (DOM for readability/speed).
@@ -37,6 +41,10 @@ export class View {
         this.resizeCanvas(); // Initial sizing.
     }
 
+    notify() {
+        this.display();
+    }
+
     display() {
         // Erase canvas.
         this.brush.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -58,8 +66,8 @@ export class View {
         } else if (this.action === 'delete') {
             //TODO: delete shape at x,y coordinates
         } else {
-            //a creation method
-            //TODO: create shape (based on action) at x,y coordinates
+            const action = this.action as Action;
+            this.viewCanvasController.createShape(action, x, y);
         }
     }
 
