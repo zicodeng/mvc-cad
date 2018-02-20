@@ -1,5 +1,6 @@
 import ShapeFactory from './shape-factory';
 import { Model } from './model';
+import { DrawableShape as Shape } from './shapes';
 
 export enum Action {
     RECTANGLE = 'rectangle',
@@ -9,7 +10,6 @@ export enum Action {
 
 class ViewCanvasController {
     private shapeFactory = new ShapeFactory();
-
     private trianglePoints: number[] = [];
 
     constructor(private model: Model) {}
@@ -54,6 +54,27 @@ class ViewCanvasController {
         if (action !== Action.TRIANGLE) {
             this.trianglePoints = [];
         }
+    }
+
+    removeShape(selectedShape: Shape): void {
+        this.model.removeShape(selectedShape);
+    }
+
+    clickMove(lastClickedShape: Shape, x: number, y: number): void {
+        this.updateShape(lastClickedShape, x, y);
+    }
+
+    dragMove(x: number, y: number): void {
+        const selectedShape = this.model.getShapeAt(x, y);
+        if (selectedShape) {
+            this.updateShape(selectedShape, x, y);
+        }
+    }
+
+    private updateShape(selectedShape: Shape, x: number, y: number) {
+        const newShape = selectedShape.getCopy();
+        newShape.setPosition(x, y);
+        this.model.updateShape(selectedShape, newShape);
     }
 }
 

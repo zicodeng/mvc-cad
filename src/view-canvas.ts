@@ -12,9 +12,10 @@ export class View implements Observer {
     readonly brush = this.canvas.getContext('2d') as CanvasRenderingContext2D;
 
     private selected: DrawableShape | null = null; // Selected state is handled by View.
+    private lastClickedShape: DrawableShape | null = null;
     private action: string; // what action we are doing (handled by View).
 
-    private viewCanvasController = new ViewCanvasController(this.model);
+    private controller = new ViewCanvasController(this.model);
 
     constructor(private model: Model) {
         // Event listeners (DOM for readability/speed).
@@ -60,14 +61,20 @@ export class View implements Observer {
     handleMouseDown(event: MouseEvent) {
         let x = event.offsetX;
         let y = event.offsetY;
+        this.selected = this.model.getShapeAt(x, y);
 
-        if (this.action === 'move') {
-            this.selected = this.model.getShapeAt(x, y);
-        } else if (this.action === 'delete') {
-            //TODO: delete shape at x,y coordinates
+        if (!this.lastClickedShape && this.selected) {
+            this.lastClickedShape = this.model.getShapeAt(x, y);
+        }
+
+        if (this.action === 'move' && !this.selected && this.lastClickedShape) {
+            this.controller.clickMove(this.lastClickedShape, x, y);
+            this.lastClickedShape = null;
+        } else if (this.action === 'delete' && this.selected) {
+            this.controller.removeShape(this.selected);
         } else {
             const action = this.action as Action;
-            this.viewCanvasController.createShape(action, x, y);
+            this.controller.createShape(action, x, y);
         }
     }
 
@@ -80,7 +87,9 @@ export class View implements Observer {
         let y = event.offsetY;
 
         if (this.selected) {
-            //TODO: move the selected shape to x,y
+            this.controller.dragMove(x, y);
+            // Disable clickMove if dragMove has been fired.
+            this.lastClickedShape = null;
         }
     }
 

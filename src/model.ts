@@ -29,7 +29,11 @@ export class Model implements Subject {
     }
 
     getShapeAt(x: number, y: number): Shape | null {
-        for (let shape of this.shapes) {
+        // Find the shape in a reversed direction,
+        // because new shape is pushed to the list
+        // and placed on top of previous shapes.
+        for (let i = this.shapes.length - 1; i >= 0; i--) {
+            let shape = this.shapes[i];
             if (shape.contains(x, y)) {
                 return shape;
             }
@@ -44,6 +48,12 @@ export class Model implements Subject {
 
     updateShape(oldShape: Shape, newShape: Shape): void {
         this.shapes[this.shapes.indexOf(oldShape)] = newShape;
+        this.notifyAll();
+    }
+
+    removeShape(shape: Shape): void {
+        this.shapes.splice(this.shapes.indexOf(shape), 1);
+        this.notifyAll();
     }
 
     //TODO: Add more methods...

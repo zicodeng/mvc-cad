@@ -32,6 +32,7 @@ export abstract class DrawableShape {
      * @param brush The graphics context to draw on
      */
     abstract draw(brush: CanvasRenderingContext2D): void;
+    abstract getCopy(): DrawableShape;
 }
 
 /**
@@ -73,6 +74,10 @@ export class Rectangle extends DrawableShape {
         brush.fillStyle = this.color;
         brush.fillRect(this.x, this.y, this.width, this.height);
     }
+
+    getCopy(): Rectangle {
+        return new Rectangle(this.x, this.y, this.width, this.height);
+    }
 }
 
 /**
@@ -107,6 +112,10 @@ export class Circle extends DrawableShape {
         brush.arc(this.cx, this.cy, this.radius, 0, 2 * Math.PI);
         brush.fill();
     }
+
+    getCopy(): Circle {
+        return new Circle(this.cx, this.cy, this.radius);
+    }
 }
 
 /**
@@ -129,8 +138,8 @@ export class Triangle extends DrawableShape {
     // Calculate centroid of triangle
     private center(): [number, number] {
         return [
-            (this.x1 + this.x2 + this.x3) / 3,
-            (this.y1 + this.y2 + this.y3) / 3
+            Math.floor((this.x1 + this.x2 + this.x3) / 3),
+            Math.floor((this.y1 + this.y2 + this.y3) / 3)
         ];
     }
 
@@ -187,5 +196,16 @@ export class Triangle extends DrawableShape {
         brush.lineTo(this.x3, this.y3);
         brush.closePath();
         brush.fill();
+    }
+
+    getCopy(): Triangle {
+        return new Triangle(
+            this.x1,
+            this.y1,
+            this.x2,
+            this.y2,
+            this.x3,
+            this.y3
+        );
     }
 }
