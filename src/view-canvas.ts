@@ -6,7 +6,7 @@ import { Observer } from './observer';
 /**
  * A class to represent the View. Contains control buttons and an HTML5 canvas.
  */
-export class View implements Observer {
+class ViewCanvas implements Observer {
     // Constants for easy access.
     readonly canvas = $('#graphics-view canvas')[0] as HTMLCanvasElement;
     readonly brush = this.canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -102,3 +102,5 @@ export class View implements Observer {
         this.display();
     }
 }
+
+export default ViewCanvas;
