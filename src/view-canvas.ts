@@ -83,6 +83,8 @@ class ViewCanvas implements Observer {
     }
 
     handleMove(event: MouseEvent) {
+        if (this.action !== 'move') return;
+
         let x = event.offsetX;
         let y = event.offsetY;
 

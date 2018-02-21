@@ -7,7 +7,7 @@ shared between the components following OOP design principles.
  * Represents an abstract Shape that can be drawn.
  */
 export abstract class DrawableShape {
-    protected color: string = '';
+    abstract color: string;
 
     /**
      * Set the shape's location on the cartesian grid
@@ -39,20 +39,20 @@ export abstract class DrawableShape {
  * Represets a rectangle
  */
 export class Rectangle extends DrawableShape {
-    protected x: number; // upper corner
-    protected y: number;
+    public x: number; // upper corner
+    public y: number;
 
     // cx,cy parameters are the CENTER of the rectangle
     constructor(
         cx: number,
         cy: number,
-        protected width: number,
-        protected height: number
+        public width: number,
+        public height: number,
+        public color = 'red'
     ) {
         super();
         this.x = cx - width / 2; // Calculate upper corner
         this.y = cy - height / 2;
-        this.color = 'red'; // Default color
     }
 
     contains(x: number, y: number): boolean {
@@ -85,12 +85,12 @@ export class Rectangle extends DrawableShape {
  */
 export class Circle extends DrawableShape {
     constructor(
-        protected cx: number,
-        protected cy: number,
-        protected radius: number
+        public cx: number,
+        public cy: number,
+        public radius: number,
+        public color = 'blue'
     ) {
         super();
-        this.color = 'blue'; // Default color
     }
 
     contains(x: number, y: number): boolean {
@@ -124,15 +124,15 @@ export class Circle extends DrawableShape {
 export class Triangle extends DrawableShape {
     // Cach pair of coordinates is a corner of the triangle
     constructor(
-        protected x1: number,
-        protected y1: number,
-        protected x2: number,
-        protected y2: number,
-        protected x3: number,
-        protected y3: number
+        public x1: number,
+        public y1: number,
+        public x2: number,
+        public y2: number,
+        public x3: number,
+        public y3: number,
+        public color = 'green'
     ) {
         super();
-        this.color = 'green'; // Default color
     }
 
     // Calculate centroid of triangle

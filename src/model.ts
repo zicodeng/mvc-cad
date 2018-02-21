@@ -51,10 +51,17 @@ export class Model implements Subject {
         this.notifyAll();
     }
 
+    updateAll(updatedShapes: Shape[]): void {
+        this.shapes = updatedShapes;
+        this.notifyAll();
+    }
+
     removeShape(shape: Shape): void {
         this.shapes.splice(this.shapes.indexOf(shape), 1);
         this.notifyAll();
     }
 
-    //TODO: Add more methods...
+    toString(): string {
+        return JSON.stringify(this.shapes);
+    }
 }
