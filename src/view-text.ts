@@ -9,7 +9,8 @@ class ViewText implements Observer {
 
     constructor(private model: Model) {
         const $updateBtn = $('#update-btn');
-        $updateBtn.click(e => this.handleClickUpdate());
+        $updateBtn.click(e => this.handleShapesUpdate());
+        this.textarea.on('input', e => this.handleShapesUpdate());
     }
 
     notify() {
@@ -22,7 +23,7 @@ class ViewText implements Observer {
         this.autosize();
     }
 
-    private handleClickUpdate() {
+    private handleShapesUpdate() {
         const updatedContent = this.textarea.val() as string;
         this.controller.updateShapes(updatedContent);
     }
