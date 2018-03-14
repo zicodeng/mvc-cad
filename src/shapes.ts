@@ -76,7 +76,13 @@ export class Rectangle extends DrawableShape {
     }
 
     getCopy(): Rectangle {
-        return new Rectangle(this.x, this.y, this.width, this.height);
+        return new Rectangle(
+            this.x,
+            this.y,
+            this.width,
+            this.height,
+            this.color
+        );
     }
 }
 
@@ -114,7 +120,7 @@ export class Circle extends DrawableShape {
     }
 
     getCopy(): Circle {
-        return new Circle(this.cx, this.cy, this.radius);
+        return new Circle(this.cx, this.cy, this.radius, this.color);
     }
 }
 
@@ -205,7 +211,8 @@ export class Triangle extends DrawableShape {
             this.x2,
             this.y2,
             this.x3,
-            this.y3
+            this.y3,
+            this.color
         );
     }
 }
