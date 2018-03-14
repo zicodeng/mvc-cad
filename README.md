@@ -1,3 +1,3 @@
-# My First CAD
+# CAD
 
-This module is a _very_ simple CAD (drawing) program using a Model-View-Controller architecture, created for the [Software Architecture](https://canvas.uw.edu/courses/1186629) course at the UW iSchool.
+A simple CAD (drawing) program using a Model-View-Controller architecture.
