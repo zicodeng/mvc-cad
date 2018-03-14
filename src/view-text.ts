@@ -8,6 +8,8 @@ class ViewText implements Observer {
     private readonly textarea = $('#text-view .form-control');
 
     constructor(private model: Model) {
+        this.model.registerObserver(this);
+
         const $updateBtn = $('#update-btn');
         $updateBtn.click(e => this.handleShapesUpdate());
         this.textarea.on('input', e => this.handleShapesUpdate());

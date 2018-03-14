@@ -5,9 +5,5 @@ import ViewCanvas from './view-canvas';
 import ViewText from './view-text';
 
 const model = new Model();
-
 const canvasView = new ViewCanvas(model);
-model.registerObserver(canvasView);
-
 const textView = new ViewText(model);
-model.registerObserver(textView);

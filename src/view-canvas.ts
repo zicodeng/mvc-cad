@@ -18,6 +18,10 @@ class ViewCanvas implements Observer {
     private controller = new ViewCanvasController(this.model);
 
     constructor(private model: Model) {
+        // The registration process should happen when the View is initiated.
+        // This ensures that the View is always registered.
+        this.model.registerObserver(this);
+
         // Event listeners (DOM for readability/speed).
         this.canvas.addEventListener('mousedown', e => {
             this.handleMouseDown(e);
